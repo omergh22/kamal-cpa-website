@@ -1,0 +1,4 @@
+.env
+leads.csv
+__pycache__/
+*.pyc
