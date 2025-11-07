@@ -398,3 +398,44 @@ section#contact .h2{ margin-top: clamp(6px, 2.5vw, 2px); }
 }
 
 /* ====== סיום ====== */
+
+
+/* ===== התאמות נוספות להדר – שומר על שורה אחת בכל טלפון ===== */
+.hdr-row{
+  flex-wrap: nowrap;   /* לא לשבור שורה */
+  gap: 12px;
+}
+.brand, .top-nav{ white-space: nowrap; }
+.top-nav{ flex-shrink: 0; }
+.brand{ min-width: 0; }
+
+/* שלב 1 – עד 480px */
+@media (max-width: 480px){
+  .hdr-row{ gap: 8px; padding-inline: 8px; }
+  .brand img{ width: 50px; height: 50px; padding: 5px; }
+  .brand-txt strong{ font-size: 14px; }
+  .brand-txt small{ font-size: 12px; }
+  .phone-pill{ padding: 8px 12px; font-size: 14px; }
+}
+
+/* שלב 2 – עד 400px */
+@media (max-width: 400px){
+  .hdr-row{ gap: 6px; }
+  .brand img{ width: 46px; height: 46px; padding: 4px; }
+  .brand-txt strong{ font-size: 13px; }
+  .brand-txt small{ font-size: 11px; }
+  .phone-pill{ padding: 7px 10px; font-size: 13px; }
+}
+
+/* שלב 3 – עד 360px: מסתירים אייקון בכפתור הטלפון לחיסכון ברוחב */
+@media (max-width: 360px){
+  .hdr-row{ gap: 4px; }
+  .brand img{ width: 42px; height: 42px; }
+  .phone-pill{ padding: 6px 9px; font-size: 12.5px; }
+  .phone-pill .ico, .phone-pill svg, .phone-pill::before{ display:none !important; }
+}
+
+/* אופציונלי – מסכים נדירים מאוד */
+@media (max-width: 330px){
+  .brand-txt small{ display:none; }
+}
