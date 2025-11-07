@@ -388,15 +388,6 @@ section#contact .h2{ margin-top: clamp(6px, 2.5vw, 2px); }
 .service-page .contact-card{ /* אותו כרטיס כמו בית */ }
 .service-page .contact{ background:transparent; border:0; padding:0; }
 
-/* ===== אפליקציה – הדגשת "תצא בקרוב" במרכז ===== */
-.app-coming{ display:flex; justify-content:center; margin-top:14px; }
-.app-coming .soon-badge{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding:10px 14px; font-weight:900;
-  border-radius:12px; background:#fff; border:2px solid var(--gold);
-  box-shadow:0 10px 26px rgba(205,161,84,.24), inset 0 1px 0 rgba(255,255,255,.6);
-}
-
 /* ====== סיום ====== */
 
 
