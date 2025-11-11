@@ -14,34 +14,32 @@
     @media (max-width:1180px){ .top-nav .soc{ display:none } }
 
     .rich p{ margin:10px 0; font-size:18px; }
-    .rich ul{ margin:10px 0 0; padding:0; list-style:none; }
-    .rich li{ position:relative; margin:2px 0; padding:4px 0; line-height:1.45; font-weight:800; color:#1f2430; }
-    .rich li.li-idea{ padding-right:26px; }
-    .rich li.li-idea::before{ content:"💡"; position:absolute; right:4px; top:.15em; font-size:1.05em; line-height:1; opacity:.95; }
-    .rich li.li-goldcheck{ padding-right:28px; }
-    .rich li.li-goldcheck::before{
-      content:""; position:absolute; right:4px; top:.35em; width:18px; height:18px;
-      background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="11" fill="%23cda154"/><path d="M7 12l3 3 7-7" stroke="white" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>');
-      background-size:contain; background-repeat:no-repeat; filter:drop-shadow(0 1px 0 rgba(0,0,0,.05));
-    }
-    .rich li.li-plain{ padding-right:0; }
-
-    .ico{ display:inline-block; vertical-align:-2px; }
-    .ico-phone{ width:1.05em; height:1.05em; margin:0 .2em; background-image:url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="%23cda154" d="M6.62 10.79a15.053 15.053 0 006.59 6.59l2.2-2.2a1 1 0 011.02-.24 11.72 11.72 0 003.68.59 1 1 0 011 1v3.67a1 1 0 01-1 1C10.3 22.99 1.01 13.7 1 2.89a1 1 0 011-1h3.67a1 1 0 011 1c0 1.27.2 2.5.59 3.68a1 1 0 01-.24 1.02l-2.4 2.2z"/></svg>'); background-size:contain; background-repeat:no-repeat; }
     .cta-par{ margin-top:18px; font-weight:900; text-align:center; }
   </style>
 </head>
 
 <body id="top" class="service-page">
-  <!-- Header -->
+  <!-- ===== Header ===== -->
   <header class="hdr" id="hdr">
     <div class="hdr-row">
       <button class="menu-toggle" id="menuToggle" aria-label="פתיחת תפריט" aria-expanded="false" aria-controls="mnav">
         <span></span><span></span><span></span>
       </button>
 
-      <nav class="nav">
-        <a href="{{ url_for('home') }}#services">שירותי המשרד</a>
+      <nav class="nav" aria-label="ניווט ראשי">
+        <!-- חשוב: id = ddServices תואם ל-JS -->
+        <div class="dd" id="ddServices">
+          <button class="dd-btn" aria-haspopup="true" aria-expanded="false">שירותי המשרד</button>
+          <ul class="dd-menu" role="menu" aria-label="שירותי המשרד">
+            <li><a role="menuitem" href="{{ url_for('service', slug='bookkeeping') }}" target="_blank" rel="noopener">הנהלת חשבונות</a></li>
+            <li><a role="menuitem" href="{{ url_for('service', slug='open-files') }}" target="_blank" rel="noopener">פתיחת תיקים</a></li>
+            <li><a role="menuitem" href="{{ url_for('service', slug='audit') }}" target="_blank" rel="noopener">ביקורת דוחות</a></li>
+            <li><a role="menuitem" href="{{ url_for('service', slug='biz-loans') }}" target="_blank" rel="noopener">ייעוץ עסקי והלוואות</a></li>
+            <li><a role="menuitem" href="{{ url_for('service', slug='mortgage') }}" target="_blank" rel="noopener">ייעוץ משכנתא</a></li>
+            <li><a role="menuitem" href="{{ url_for('service', slug='tax-refund') }}" target="_blank" rel="noopener">החזרי מס</a></li>
+          </ul>
+        </div>
+
         <a href="{{ url_for('home') }}#about">קצת עלינו</a>
         <a href="{{ url_for('home') }}#app">האפליקציה שלנו</a>
         <a href="{{ url_for('home') }}#contact">יצירת קשר</a>
@@ -71,19 +69,33 @@
   </header>
   <div class="hdr-spacer" aria-hidden="true"></div>
 
-  <!-- Mobile menu -->
+  <!-- ===== Mobile menu ===== -->
   <div class="mnav-backdrop" id="mnavBackdrop" hidden></div>
   <aside class="mobile-menu" id="mnav" hidden>
     <div class="mnav-head">
       <b>תפריט</b>
       <button class="menu-close" id="menuClose" aria-label="סגירת תפריט">×</button>
     </div>
-    <nav class="mnav-links">
-      <a href="{{ url_for('home') }}#services">שירותי המשרד</a>
+
+    <nav class="mnav-links" aria-label="תפריט נייד">
+      <!-- קבוצה מתקפלת למובייל: id = mddServices תואם ל-JS -->
+      <div class="mdd" id="mddServices">
+        <button class="mdd-btn" aria-expanded="false">שירותי המשרד</button>
+        <div class="mdd-menu" hidden>
+          <a href="{{ url_for('service', slug='bookkeeping') }}" target="_blank" rel="noopener">הנהלת חשבונות</a>
+          <a href="{{ url_for('service', slug='open-files') }}" target="_blank" rel="noopener">פתיחת תיקים</a>
+          <a href="{{ url_for('service', slug='audit') }}" target="_blank" rel="noopener">ביקורת דוחות</a>
+          <a href="{{ url_for('service', slug='biz-loans') }}" target="_blank" rel="noopener">ייעוץ עסקי והלוואות</a>
+          <a href="{{ url_for('service', slug='mortgage') }}" target="_blank" rel="noopener">ייעוץ משכנתא</a>
+          <a href="{{ url_for('service', slug='tax-refund') }}" target="_blank" rel="noopener">החזרי מס</a>
+        </div>
+      </div>
+
       <a href="{{ url_for('home') }}#about">קצת עלינו</a>
       <a href="{{ url_for('home') }}#app">האפליקציה שלנו</a>
       <a href="{{ url_for('home') }}#contact">יצירת קשר</a>
     </nav>
+
     <div class="mnav-ctas">
       <a class="btn btn-outline-gold" href="{{ url_for('home') }}#contact">שיחת היכרות</a>
       <a class="btn phone-pill" href="tel:054-5540446"><span dir="ltr">054-5540446</span> ☎</a>
@@ -93,13 +105,7 @@
   <!-- ===== Hero ===== -->
   <section class="service-hero">
     <figure class="hero-photo">
-      <img
-        src="{{ url_for('static', filename=page.hero_img) }}"
-        alt="{{ page.title }}"
-        loading="eager"
-        decoding="async"
-        onerror="this.style.display='none'; this.closest('.hero-photo').classList.add('no-img');"
-      >
+      <img src="{{ url_for('static', filename=page.hero_img) }}" alt="{{ page.title }}" loading="eager" decoding="async" onerror="this.style.display='none'; this.closest('.hero-photo').classList.add('no-img');">
       <figcaption class="hero-overlay">
         <h1 class="service-title">{{ page.title }}</h1>
         <p class="service-lead">{{ page.intro }}</p>
@@ -141,14 +147,13 @@
       </div>
     </section>
 
-    <!-- טופס יצירת קשר — גרסת ה"מפה" כמו בדף הראשי -->
+    <!-- ===== יצירת קשר ===== -->
     <section class="section" id="contact">
       <div class="container">
         <h2 class="h2">השאירו פרטים ונחזור אליכם</h2>
 
         <div class="contact-card">
           <div class="cc-body">
-            <!-- צד שמאל: מפה ופרטים -->
             <aside class="cc-aside">
               <a href="https://maps.app.goo.gl/fyJm86ESx7dwCVYB9" target="_blank" rel="noopener" aria-label="פתיחת המיקום במפה">
                 <img class="cc-map" src="{{ url_for('static', filename='mekom.png') }}" alt="מיקום המשרד" />
@@ -161,20 +166,15 @@
               <a class="cc-wa wa-link" href="https://wa.me/972524882966" target="_blank" rel="noopener">פתיחת צ'אט וואטסאפ</a>
             </aside>
 
-            <!-- צד ימין: טופס -->
             <form method="post" action="/submit" class="cc-form">
               <label class="sr-only" for="cc_name">שם מלא</label>
               <input id="cc_name" name="full_name" type="text" required placeholder="שם מלא">
-
               <label class="sr-only" for="cc_phone">טלפון</label>
               <input id="cc_phone" name="phone" type="tel" dir="ltr" required placeholder="טלפון">
-
               <label class="sr-only" for="cc_email">אימייל</label>
               <input id="cc_email" name="email" type="email" placeholder="אימייל">
-
               <label class="sr-only" for="cc_msg">הודעה</label>
               <textarea id="cc_msg" name="message" rows="6" placeholder="ספר/י בקצרה מה צריך"></textarea>
-
               <button class="btn btn-gold-fill cc-submit" type="submit">שליחה</button>
             </form>
           </div>
@@ -183,7 +183,7 @@
     </section>
   </main>
 
-  <!-- Footer -->
+  <!-- ===== Footer ===== -->
   <footer class="section footer">
     <div class="container footer-wrap">
       <div class="footer-row">
@@ -191,32 +191,24 @@
         <span class="sep">·</span>
         <a class="footer-link" href="tel:054-5540446"><span dir="ltr">054-5540446</span></a>
         <span class="sep">·</span>
-        <a class="footer-link" href="https://maps.app.goo.gl/fyJm86ESx7dwCVYB9" target="_blank" rel="noopener">
-          📍 מגאר, כביש ראשי מעל בנק לאומי, קומה 1
-        </a>
+        <a class="footer-link" href="https://maps.app.goo.gl/fyJm86ESx7dwCVYB9" target="_blank" rel="noopener">📍 מגאר, כביש ראשי מעל בנק לאומי, קומה 1</a>
       </div>
       <div class="footer-social">
-        <a class="soc" href="https://wa.me/972524882966" target="_blank" rel="noopener" aria-label="WhatsApp">
-          <img src="{{ url_for('static', filename='97.png') }}" alt="">
-        </a>
-        <a class="soc" href="https://www.facebook.com/kmal.serhan" target="_blank" rel="noopener" aria-label="Facebook">
-          <img src="{{ url_for('static', filename='98.png') }}" alt="">
-        </a>
-        <a class="soc" href="https://www.instagram.com/kamalserhan/" target="_blank" rel="noopener" aria-label="Instagram">
-          <img src="{{ url_for('static', filename='99.png') }}" alt="">
-        </a>
+        <a class="soc" href="https://wa.me/972524882966" target="_blank" rel="noopener" aria-label="WhatsApp"><img src="{{ url_for('static', filename='97.png') }}" alt=""></a>
+        <a class="soc" href="https://www.facebook.com/kmal.serhan" target="_blank" rel="noopener" aria-label="Facebook"><img src="{{ url_for('static', filename='98.png') }}" alt=""></a>
+        <a class="soc" href="https://www.instagram.com/kamalserhan/" target="_blank" rel="noopener" aria-label="Instagram"><img src="{{ url_for('static', filename='99.png') }}" alt=""></a>
       </div>
       <div class="footer-copy">© כל הזכויות שמורות — כמאל סרחאן</div>
     </div>
   </footer>
 
-  <!-- כפתור וואטסאפ צף -->
-  <a id="waFab" class="wa-fab wa-link" href="https://wa.me/972524882966" target="_blank" rel="noopener"
-     aria-label="פתיחת צ'אט וואטסאפ">
+  <!-- ===== FAB WhatsApp ===== -->
+  <a id="waFab" class="wa-fab wa-link" href="https://wa.me/972524882966" target="_blank" rel="noopener" aria-label="פתיחת צ'אט וואטסאפ">
     <img src="{{ url_for('static', filename='97.png') }}" alt="" aria-hidden="true">
   </a>
 
   <script>
+    /* וואטסאפ – טקסט ברירת מחדל */
     (function(){
       const defaultMsg = 'היי כמאל, הגעתי מהאתר ורוצה לשוחח.%0Aשם: %0Aטלפון: ';
       document.querySelectorAll('a.wa-link').forEach(a=>{
@@ -225,6 +217,7 @@
       });
     })();
 
+    /* פתיחה/סגירה של תפריט צד במובייל */
     const menuToggle = document.getElementById('menuToggle');
     const menuClose  = document.getElementById('menuClose');
     const mnav       = document.getElementById('mnav');
@@ -239,6 +232,40 @@
     menuToggle?.addEventListener('click', ()=>openMenu(true));
     menuClose?.addEventListener('click', ()=>openMenu(false));
     backdrop?.addEventListener('click', ()=>openMenu(false));
+
+    /* === Dropdown Desktop (id=ddServices) === */
+    (function(){
+      const dd = document.getElementById('ddServices');
+      if(!dd) return;
+      const btn  = dd.querySelector('.dd-btn');
+      const menu = dd.querySelector('.dd-menu');
+
+      function closeAll(){
+        dd.classList.remove('open');
+        btn.setAttribute('aria-expanded','false');
+      }
+      btn.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const on = !dd.classList.contains('open');
+        if(on){ dd.classList.add('open'); btn.setAttribute('aria-expanded','true'); }
+        else { closeAll(); }
+      });
+      document.addEventListener('click', (e)=>{ if(!dd.contains(e.target)) closeAll(); });
+      document.addEventListener('keydown', (e)=>{ if(e.key==='Escape') closeAll(); });
+    })();
+
+    /* === Dropdown Mobile (id=mddServices) === */
+    (function(){
+      const group = document.getElementById('mddServices');
+      if(!group) return;
+      const btn = group.querySelector('.mdd-btn');
+      const box = group.querySelector('.mdd-menu');
+      btn.addEventListener('click', ()=>{
+        const open = btn.getAttribute('aria-expanded') === 'true';
+        btn.setAttribute('aria-expanded', String(!open));
+        box.hidden = open;
+      });
+    })();
   </script>
 </body>
 </html>

@@ -57,17 +57,47 @@ img,svg{ max-width:100%; height:auto; display:block; }
 @media (max-width:980px){ .brand img{ width:52px; height:52px; padding:5px } }
 
 .nav{ flex:1; display:flex; justify-content:center; align-items:center; gap:22px; }
-.hdr .nav a{ color:var(--ink); text-decoration:none; font-weight:800; opacity:.95 }
-.hdr .nav a:hover{ opacity:1; color:var(--gold); text-decoration:underline; text-underline-offset:3px }
+.hdr .nav a,
+.hdr .nav .dd-btn{
+  color:var(--ink); text-decoration:none; font-weight:800; opacity:.95;
+  font-size:18px; line-height:1;
+}
+.hdr .nav a:hover,
+.hdr .nav .dd-btn:hover{ opacity:1; color:var(--gold); text-decoration:underline; text-underline-offset:3px }
 .top-nav{ display:flex; gap:10px; }
 .btn{ border-radius:12px; font-weight:900; display:inline-flex; align-items:center; justify-content:center; padding:10px 14px; text-decoration:none; user-select:none; }
 .btn-outline-gold{ background:#fff; color:#111; border:2px solid var(--gold); border-radius:14px; padding:12px 18px; font-weight:900; }
 .phone-pill{ background:var(--ink); color:#fff; border-radius:999px; padding:10px 18px; box-shadow:0 10px 20px rgba(0,0,0,.10); white-space:nowrap; }
 
+/* ===== Dropdown בשורת הניווט ===== */
+.dd{ position:relative; }
+.dd-btn{
+  background:transparent; border:0; cursor:pointer;
+  font-weight:800; color:var(--ink); padding:0; line-height:1;
+}
+.dd-btn::after{ content:" ▾"; font-weight:900; }
+.dd-menu{
+  position:absolute; inset-inline-end:0; top:calc(100% + 8px);
+  min-width:220px; padding:8px; margin:0; list-style:none;
+  background:#fff; border:1px solid rgba(0,0,0,.08);
+  border-radius:12px; box-shadow:0 16px 40px rgba(0,0,0,.18);
+  display:none; z-index:10000; text-align:right;
+}
+.dd-menu a{
+  display:block; padding:10px 12px; border-radius:8px;
+  color:#111; text-decoration:none; white-space:nowrap;
+}
+.dd-menu a:hover{ background:#f6f7fb; }
+.dd.open .dd-menu{ display:block; }
+/* הובר בדסקטופ */
+@media (hover:hover){ .dd:hover .dd-menu{ display:block; } }
+/* במובייל אין צורך בדרופדאון (תפריט נפרד) */
+@media (max-width:1180px){ .dd-menu{ display:none !important; } }
+
 /* חשוב: לא מסתירים סושיאל בכלל האתר! הסתרה נקודתית בכרטיס ה-CONTACT בלבד */
 .contact-card .cc-social{ display:none !important; }
 
-/* תפריט מובייל */
+/* ===== תפריט מובייל ===== */
 .menu-toggle{ display:none; width:44px; height:40px; border-radius:12px; background:transparent; border:1px solid rgba(0,0,0,.15); color:var(--ink); cursor:pointer; align-items:center; justify-content:center; gap:4px; flex-direction:column; }
 .menu-toggle span{ display:block; width:22px; height:2.5px; background:var(--ink); border-radius:2px; }
 @media (max-width:1180px){ .nav{ display:none } .menu-toggle{ display:inline-flex } }
@@ -84,10 +114,67 @@ img,svg{ max-width:100%; height:auto; display:block; }
 .mobile-menu.open{ transform:translateX(0) }
 .mnav-head{ display:flex; align-items:center; justify-content:space-between; color:#fff }
 .menu-close{ width:40px; height:40px; border-radius:10px; background:transparent; color:#fff; border:1px solid rgba(255,255,255,.25); cursor:pointer; }
+
+/* ==== קישורים בתפריט מובייל (גודל אחיד) ==== */
 .mnav-links{ display:grid; gap:8px }
-.mnav-links a{ color:#fff; text-decoration:none; font-weight:800; padding:10px 12px; border-radius:10px; background:#ffffff12; border:1px solid rgba(255,255,255,.08) }
+.mnav-links a{
+  color:#fff; text-decoration:none; font-weight:800;
+  padding:12px 14px;                 /* ↑ הוגדל ליישור גובה */
+  border-radius:10px;
+  background:#ffffff12; border:1px solid rgba(255,255,255,.08);
+  font-size:18px; line-height:1;     /* ↑ גודל וגובה כמו כולם */
+}
 .mnav-links a:hover{ background:#ffffff1f }
 .mnav-ctas{ display:grid; gap:8px; margin-top:auto }
+
+/* === תת-תפריט מובייל (mdd) — כפתור בגודל זהה לשאר הפריטים === */
+.mnav-links .mdd{
+  background:transparent; border:0; border-radius:10px; padding:0;
+}
+.mdd-btn{
+  width:100%;
+  background:#ffffff12; border:1px solid rgba(255,255,255,.08);
+  border-radius:10px; color:#fff; font-weight:800; text-align:right;
+  padding:12px 14px;                 /* ↑ בדיוק כמו .mnav-links a */
+  font-size:18px; line-height:1;     /* ↑ אותו גודל */
+  cursor:pointer; display:flex; align-items:center; justify-content:space-between;
+}
+.mdd-btn:hover{ background:#ffffff1f; }
+.mdd-btn::after{ content:"▾"; font-weight:900; transition:transform .15s ease; }
+.mdd-btn[aria-expanded="true"]::after{ transform:rotate(180deg); }
+
+/* --- תת-תפריט במובייל: RTL אמיתי, גלולות בגודל התוכן מיושרות לימין --- */
+.mdd-btn{ direction: rtl; text-align: right; }
+
+.mdd-menu{
+  display: flex;
+  flex-direction: column;   /* אחד מתחת לשני */
+  gap: 8px;
+  margin-top: 8px;
+  direction: rtl;           /* כיוון כתיבה מימין לשמאל */
+  align-items: flex-start;  /* ב-RTL: cross-start = ימין */
+  text-align: right;
+}
+.mdd-menu[hidden]{ display:none; }
+
+.mdd-menu a{
+  display: inline-flex;     /* גודל לפי התוכן */
+  width: auto;
+  padding: 8px 14px;
+  border-radius: 10px;
+  background: #ffffff12;
+  border: 1px solid rgba(255,255,255,.10);
+  color: #fff; text-decoration: none;
+  font-size: 15px; font-weight: 700;
+  line-height: 1;
+  align-self: flex-start;   /* מבטיח צמוד לימין גם אם כללים אחרים מתערבים */
+}
+.mdd-menu a:hover{
+  background:#ffffff22;
+  border-color:rgba(255,255,255,.18);
+}
+
+
 
 /* ===== Hero (ישן לתאימות) ===== */
 .hero{ position:relative; overflow:hidden; min-height: clamp(520px, 70vh, 680px); padding: clamp(24px,4vw,40px) 0; }
@@ -173,12 +260,12 @@ body.service-page .service-hero::after{ content:""; display:block; height:10px; 
 /* ✅ חותמת מתחת לציטוט */
 .why-sign{
   display:flex;
-  justify-content:flex-start; /* ב־RTL זה אומר מיושר לימין */
+  justify-content:flex-start;
   align-items:center;
   margin-top:10px;
 }
 .why-sign img{
-  width: clamp(120px, 32%, 240px); /* גמיש, לא שובר את הכרטיס */
+  width: clamp(120px, 32%, 240px);
   height:auto;
   object-fit:contain;
   filter: drop-shadow(0 4px 10px rgba(0,0,0,.10));
@@ -187,7 +274,6 @@ body.service-page .service-hero::after{ content:""; display:block; height:10px; 
 
 /* ריספונסיביות: במובייל – הכרטיס באמצע התמונה */
 @media (max-width:900px){
-  /* ★ מרחיק מעט למעלה את כרטיס "קצת עלינו" במובייל */
   :root{ --about-mobile-top:42%; }
 
   #why.section, #about.section{ padding: clamp(2px, 1.6vw, 8px) 0 clamp(10px, 2vw, 18px); }
@@ -200,11 +286,7 @@ body.service-page .service-hero::after{ content:""; display:block; height:10px; 
   }
   #why .h2, #about .h2{ margin-top:0; }
 
-  /* מיקום הכרטיס של "קצת עלינו" על התמונה + ריפוד תחתון למניעת דריסה של מקטע האפליקציה */
-  #about .why-grid{
-    position: relative;
-    padding-bottom: 260px; /* ניתן לכוון ל-220–320px לפי הצורך */
-  }
+  #about .why-grid{ position: relative; padding-bottom: 260px; }
   #about .why-img{ position:relative; }
   #about .why-text{
     position:absolute;
@@ -214,7 +296,6 @@ body.service-page .service-hero::after{ content:""; display:block; height:10px; 
     width:min(92vw, 460px);
     z-index:3;
 
-    /* רקע מעט אטום כדי שהטקסט לא ייבלע על החולצה */
     background:
       linear-gradient(180deg, rgba(205,161,84,.10), rgba(205,161,84,.05)),
       rgba(255,255,255,.88);
@@ -227,7 +308,6 @@ body.service-page .service-hero::after{ content:""; display:block; height:10px; 
   }
   #about .h2{ text-align:center; margin:0 0 6px; }
 
-  /* חותמת – ריכוז במובייל וגודל בטוח */
   .why-sign{ justify-content:center; margin-top:8px; }
   .why-sign img{ width: clamp(100px, 36vw, 180px); max-width:88%; }
 }
@@ -293,7 +373,7 @@ body.service-page .hero-photo::after{ content:""; position:absolute; inset:0; ba
   body.service-page .service-title{ font-size: clamp(24px, 2.6vw, 36px); }
   .h2{ font-size: clamp(26px, 2.8vw, 42px); }
 }
-body.service-page .hero-actions{ display:none !important; }
+body.service-page .hero-actions{ display:none !important; } /* keep as in your previous version */
 body.service-page .service-hero-grid{ grid-template-columns:1fr; gap:0; }
 
 /* ==== רשימות עשירות ==== */
@@ -332,7 +412,7 @@ body.service-page .service-hero-grid{ grid-template-columns:1fr; gap:0; }
 .home-hero .hero-photo::after{ content:""; position:absolute; inset:0; background: rgba(255,255,255,.18); pointer-events:none; }
 .home-hero .hero-overlay{ text-align: right; direction: rtl; }
 .home-hero .home-hero-text{ max-width: 900px; margin: 0 auto; text-align: right; }
-.home-hero .home-hero-text p{ margin: 0 0 10px; font-size: clamp(16px, 1.6vw, 19px); line-height: 1.9; color: #0f1830; letter-spacing: 0.1px; }
+.home-hero .home-hero-text p{ margin: 0 0 10px; font-size: clamp(16px, 1.6vw, 19px); line-height: 1.9; color: #0f1830; }
 
 /* ריווחי H2 ו-CTA */
 .h2{ margin-top: clamp(54px, 6px, 88px); margin-bottom: 18px; }
@@ -393,7 +473,7 @@ section#contact .h2{ margin-top: clamp(6px, 2.5vw, 2px); }
 
 /* ===== התאמות נוספות להדר – שומר על שורה אחת בכל טלפון ===== */
 .hdr-row{
-  flex-wrap: nowrap;   /* לא לשבור שורה */
+  flex-wrap: nowrap;
   gap: 12px;
 }
 .brand, .top-nav{ white-space: nowrap; }
